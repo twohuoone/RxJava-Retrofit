@@ -83,7 +83,7 @@ public class RxJava_RetrofitActivity extends AppCompatActivity implements View.O
             }
         };
 //        HttpMethods.getInstance().getTopMovie(sub,0,10);
-        httpMethods.getTopMovie(sub,0,10);
+//        httpMethods.getTopMovie(sub,0,10);
 
     }
 
