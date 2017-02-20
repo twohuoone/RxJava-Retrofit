@@ -1,6 +1,7 @@
 package com.jll.zoro.rxjava_retrofit;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jll.zoro.rxjava_retrofit.interfaceInfo.ProgressCancelListener;
@@ -66,6 +67,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     public void onCancelProgress() {
         if (!this.isUnsubscribed()) {
             this.unsubscribe();
+            Log.i("dd","HAHAAHAHHAHAHAAHAHA");
         }
     }
 }
