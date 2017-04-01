@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -22,8 +23,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class HttpMethods {
-    public static final String BASE_URL = "https://api.douban.com/v2/movie/";
-    private static final int DEFAULT_TIMEOUT = 5;
+    private static String BASE_URL = "https://api.douban.com/v2/movie/";
+    private static OkHttpClient.Builder httpClientBuilder;
+    private static int DEFAULT_TIMEOUT = 5;
 
     private Retrofit retrofit;
     private MovieService movieService;
@@ -53,11 +55,14 @@ public class HttpMethods {
         return SingleHolder.INSTANCE;
     }
 */
+
     /**
      * 用来统一处理Http的resultCode,并将HttpResult的Data部分剥离出来返回给subscriber
      *
      * @param <T> Subscriber真正需要的数据类型，也就是Data部分的数据类型
      */
+
+
     private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
 
         @Override
@@ -69,7 +74,15 @@ public class HttpMethods {
         }
     }
 
-    public HttpMethods(){
+    public void setBaseUrl(String url) {
+        BASE_URL = url;
+    }
+
+    public void setConnectTimeOut(int timeOut) {
+        DEFAULT_TIMEOUT = timeOut;
+    }
+
+    public HttpMethods() {
         //手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -83,8 +96,26 @@ public class HttpMethods {
 
         movieService = retrofit.create(MovieService.class);
     }
-    public void getTopMovie(ProgressSubscriber<List<Subject>> subscriber, int start, int end){
-        movieService.getTopMovie(start,end)
+
+    public void HttpMethods_1() {
+        //手动创建一个OkHttpClient并设置超时时间
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+    }
+
+    public void init() {
+        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+
+        retrofit = new Retrofit.Builder()
+                .client(httpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(BASE_URL)
+                .build();
+        movieService = retrofit.create(MovieService.class);
+    }
+
+    public Subscription getTopMovie(ProgressSubscriber<List<Subject>> subscriber, int start, int end) {
+       return movieService.getTopMovie(start, end)
                 .map(new HttpResultFunc<List<Subject>>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

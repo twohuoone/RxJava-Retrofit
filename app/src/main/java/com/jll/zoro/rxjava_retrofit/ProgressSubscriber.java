@@ -1,8 +1,6 @@
 package com.jll.zoro.rxjava_retrofit;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.jll.zoro.rxjava_retrofit.interfaceInfo.ProgressCancelListener;
 import com.jll.zoro.rxjava_retrofit.interfaceInfo.SubscriberOnNextListener;
@@ -49,13 +47,11 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     @Override
     public void onCompleted() {
         dismissProgressDialog();
-        Toast.makeText(context, "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onError(Throwable e) {
         dismissProgressDialog();
-        Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -67,7 +63,6 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     public void onCancelProgress() {
         if (!this.isUnsubscribed()) {
             this.unsubscribe();
-            Log.i("dd","HAHAAHAHHAHAHAAHAHA");
         }
     }
 }

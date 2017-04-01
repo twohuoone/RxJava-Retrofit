@@ -1,7 +1,6 @@
 package com.jll.zoro.rxjava_retrofit;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
@@ -36,14 +35,14 @@ public class ProgressDialogHandler extends Handler {
         if (pd == null) {
             pd = new LoadDialog(context);
             //控制是否可以让用户手动去cancel请求以及解绑sub
-            if (cancelable) {
-                pd.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        mProgressCancelListener.onCancelProgress();
-                    }
-                });
-            }
+//            if (cancelable) {
+//                pd.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                    @Override
+//                    public void onCancel(DialogInterface dialogInterface) {
+//                        mProgressCancelListener.onCancelProgress();
+//                    }
+//                });
+//            }
 
             if (!pd.dialog.isShowing()) {
                 pd.start();

@@ -27,7 +27,7 @@ public class LoadDialog {
         ImageView loadImage = (ImageView) dialog.findViewById(R.id.loadImage);
         loadImage.setImageDrawable(mWaveDrawable);
         mWaveDrawable.setIndeterminate(true);
-//        this.dialog.setCancelable(true);
+        this.dialog.setCancelable(false);
     }
 
     public void start() {

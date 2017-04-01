@@ -17,6 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
+import rx.Subscription;
 
 public class RxJava_RetrofitActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -55,7 +56,7 @@ public class RxJava_RetrofitActivity extends AppCompatActivity implements View.O
     }
     //封装单独处理onNext()
     private void getData_2() {
-        httpMethods.getTopMovie(new ProgressSubscriber(getTopMovieOnNext,this),0,10);
+        Subscription subscription = httpMethods.getTopMovie(new ProgressSubscriber(getTopMovieOnNext,this),0,10);
     }
 
     //将请求进行封装
